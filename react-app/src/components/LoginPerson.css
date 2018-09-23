@@ -16,16 +16,6 @@
 .App-intro {
   font-size: large;
 }
-
-table, th, td {
-   border: 1px solid black;
-}
-
-table {
-  width: 100%;
-}
-
-th, td {
-  text-align: center;
-  padding: 15px;
+.err {
+  color: red;
 }

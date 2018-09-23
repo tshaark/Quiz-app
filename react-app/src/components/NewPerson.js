@@ -8,17 +8,20 @@ class NewPerson extends Component {
       formData: {
         firstName: "",
         lastName: "",
-        city: "",
+        email: "",
+        password: "",
       },
       submitted: false,
     }
     this.handleFChange = this.handleFChange.bind(this);
     this.handleLChange = this.handleLChange.bind(this);
-    this.handleCChange = this.handleCChange.bind(this);
+    this.handleEChange = this.handleEChange.bind(this);
+    this.handlePChange = this.handlePChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleSubmit (event) {
+    
     event.preventDefault();
     fetch('http://localhost:8080/people', {
      method: 'POST',
@@ -36,8 +39,11 @@ class NewPerson extends Component {
   handleLChange(event) {
     this.state.formData.lastName = event.target.value;
   }
-  handleCChange(event) {
-    this.state.formData.city = event.target.value;
+  handleEChange(event) {
+    this.state.formData.email = event.target.value;
+  }
+  handlePChange(event) {
+    this.state.formData.password = event.target.value;
   }
 
   render() {
@@ -59,9 +65,14 @@ class NewPerson extends Component {
                 <input type="text" className="form-control" value={this.state.lastName} onChange={this.handleLChange}/>
             </div>
             <div className="form-group">
-                <label>City</label>
-                <input type="text" className="form-control" value={this.state.city} onChange={this.handleCChange}/>
+                <label>Email</label>
+                <input type="text" className="form-control" value={this.state.email} onChange={this.handleEChange}/>
             </div>
+            <div className="form-group">
+                <label>Password</label>
+                <input type="password" className="form-control" value={this.state.password} onChange={this.handlePChange}/>
+            </div>
+
                 <button type="submit" className="btn btn-default">Submit</button>
           </form>
         </div>

@@ -15,10 +15,17 @@ type Person struct {
    ID uint `json:"id"`
    FirstName string `json:"firstname"`
    LastName string `json:"lastname"`
-   City string `json:"city"`
+   Password string `json:"password"`
+   Email string `json:"email"`
+}
+type User struct{
+    Email string `json:"email"`
+    Password string `json:"password"`
 }
 
-func main() {
+
+func main(){
+
    db, err = gorm.Open("sqlite3", "./gorm.db")
    if err != nil {
       fmt.Println(err)
@@ -30,12 +37,24 @@ func main() {
    r.GET("/people/", GetPeople)                             // Creating routes for each functionality
    r.GET("/people/:id", GetPerson)
    r.POST("/people", CreatePerson)
+   r.POST("/login",LoginPerson)
    r.PUT("/people/:id", UpdatePerson)
    r.DELETE("/people/:id", DeletePerson)
    r.Use((cors.Default()))
    r.Run(":8080")                                           // Run on port 8080
 }
 
+func LoginPerson(c *gin.Context){
+    var person Person
+    c.BindJSON(&person)
+    if err := db.Where("email = ? AND password = ?", person.Email,person.Password).First(&person).Error; err != nil {
+        c.AbortWithStatus(404)
+        fmt.Println(err)
+        } else {
+        c.Header("access-control-allow-origin", "*") // Why am I doing this?
+        c.JSON(200, person)
+     }
+}
 
 func DeletePerson(c *gin.Context) {
    id := c.Params.ByName("id")
