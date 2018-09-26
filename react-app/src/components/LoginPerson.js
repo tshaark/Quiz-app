@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './LoginPerson.css';
 import PropTypes from 'prop-types';
 import UserProfile from './UserProfile';
+import { GoogleLogin } from 'react-google-login';
 
 
 class LoginPerson extends Component {
@@ -28,10 +29,20 @@ handleEmailChange(event){
 handlePassChange(event){
   this.state.formData.password =  event.target.value;
 }
+logout=()=>{
+  localStorage.clear();
+  this.context.router.history.push("/LoginPerson");
+}
+responseGoogle = (response) => {
+  // UserProfile.setEmail(response.w3.U3);
+  localStorage.setItem("email",response.w3.U3);
+  // UserProfile.setPassword("lassan");
+  this.context.router.history.push("/play")
 
+}
 
 handleSubmit(event) {
-    // alert('An email and password was submitted: '+ this.state.email + this.state.password);
+      // alert('An email and password was submitted: '+ this.state.formData.email + this.state.formData.password);
     event.preventDefault();
     fetch('http://localhost:8080/login', {
      method: 'POST',
@@ -39,15 +50,17 @@ handleSubmit(event) {
    })
       .then(response => {
         if(response.status >= 200 && response.status < 300)
-          // console.log('BOndBagwal')
-          UserProfile.setEmail(this.state.formData.email);
-          this.context.router.history.push("/Profile");
+          console.log('BOndBagwal')
+          // UserProfile.setEmail(this.state.formData.email);
+          localStorage.setItem("email",this.state.formData.email);
+          this.context.router.history.push("/Play");
           this.setState({submitted: true});
       });
   }
 
   render() {
-
+    if(localStorage.getItem("email") == null)
+    {
     return (
       <div className="App">
       <header className="App-header">
@@ -67,6 +80,14 @@ handleSubmit(event) {
               <div className="bar"/>
             </div>
             <button type="submit" className="btn btn-default">Submit</button>
+            <br></br>
+            <br></br>
+            <GoogleLogin
+                clientId="1018147983310-b339ocvqlaqrg3smchub06119n4f5roe.apps.googleusercontent.com"
+                buttonText="Google"
+                onSuccess={this.responseGoogle}
+                onFailure={this.responseGoogle}>
+            </GoogleLogin>
             <div className="footer"><a href="#">Forgot your password?</a></div>
           </form>
         </div>
@@ -81,6 +102,16 @@ handleSubmit(event) {
         </div>
      
     );
+      }
+    else{
+      return(
+        <div>
+        <h2>Someone is already logged in.</h2>
+        <button onClick={this.logout}>LOG OUT</button>
+        </div>
+
+      );
+    }
   }
 }
 

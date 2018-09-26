@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 class NewComponent extends Component {
   render() {
     return (
-        <h2> {this.props.text} </h2>
+        <h2>BASIC QUIZ APP </h2>
     );
   }
 }

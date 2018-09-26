@@ -9,6 +9,7 @@ class AdminPanel extends Component{
         super();
     this.handleQuiz = this.handleQuiz.bind(this);
     this.handleUsers = this.handleUsers.bind(this);
+    this.handleViewQuizzes = this.handleViewQuizzes.bind(this);
     }
 
 static contextTypes = {
@@ -23,8 +24,17 @@ handleUsers=(event)=>{
     event.preventDefault();
     this.context.router.history.push("/ViewPeople");
 }
+handleViewQuizzes=(event)=>{
+    event.preventDefault();
+    this.context.router.history.push("/ViewQuizzes");
+}
+handleDel=(event)=>{
+    event.preventDefault();
+    this.context.router.history.push("/DeletePerson");
+}
 render(){
-    const email = UserProfile.getEmail();
+    // const email = UserProfile.getEmail();
+    const email = localStorage.getItem("email");
     if(email !== "admin@admin.com")
     {
         return(
@@ -46,6 +56,12 @@ render(){
                 <br></br>
                 <br></br>
                 <button onClick={this.handleUsers}>Users</button>
+                <br></br>
+                <br></br>
+                <button onClick={this.handleViewQuizzes}>ViewQuizzes</button>
+                <br></br>
+                <br></br>
+                <button onClick={this.handleDel}>Delete Player</button>
             </div>
 
         )

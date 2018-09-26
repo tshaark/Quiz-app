@@ -7,9 +7,9 @@ class Home extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <h1 className="App-title">Welcome to React</h1>
+          <h1 className="App-title">Welcome to My Quiz App</h1>
         </header>
-        <NewComponent text={"This text comes from another component called newComponent.js"}/>
+        <NewComponent text={"This is my basic quiz app."}/>
       </div>
     );
   }
