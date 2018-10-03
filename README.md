@@ -1,4 +1,4 @@
-# Welocme to QuizApp!
+# Welcome to QuizApp!
 
 # Introduction to the project:
 I have to written a Go server that implements REST API and interacts with the database at the backend. The front end is a React application that is an interactive quiz.
